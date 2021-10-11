@@ -94,7 +94,7 @@ def nr_de_forma_x_la_k(element, k):
 def get_longest_powers_of_k(lista, k):
     """
     Functia determina cea mai lunga subsecventa formata din elemente care se pot scrie sub forma x^k,k citit
-    :param lista: lista de elmente
+    :param lista: lista de elemente
     :param k: numar natural
     :return: cea mai lunga subsecventa
     """
@@ -134,6 +134,58 @@ def test_get_longest_powers_of_k():
     assert get_longest_powers_of_k([4, 9, 1, 4, 16, 9], 2) == [4, 16, 9]
 
 
+def numar_par(element):
+    """
+    Functia verifica daca un numar este par
+    :param element: numar intreg
+    :return: True/False
+    """
+
+    if element % 2 == 0:
+        return True
+    return False
+
+
+def get_longest_all_even(lista):
+    """
+    Functia determina cea mai lunga subsecventa formata din elemente pare
+    :param lista: lista de elemente
+    :return: cea mai lunga subsecventa
+    """
+
+    subsecventa_maxima = []
+    len_subsecventa_curenta = 0
+    len_subsecventa_maxima = 0
+    verificare = 0
+
+    for i in range(len(lista)):
+        if numar_par(lista[i]):
+            verificare = 1
+            len_subsecventa_curenta = len_subsecventa_curenta + 1
+
+        elif len_subsecventa_maxima < len_subsecventa_curenta:
+            indice_final = i - 1
+            indice_inceput = i - len_subsecventa_curenta
+            len_subsecventa_maxima = len_subsecventa_curenta
+            len_subsecventa_curenta = 0
+
+    if len_subsecventa_maxima < len_subsecventa_curenta:
+        indice_final = i
+        indice_inceput = i - len_subsecventa_curenta + 1
+
+    if verificare == 1:
+        for i in range(indice_inceput, indice_final + 1):
+            subsecventa_maxima.append(lista[i])
+    else:
+        return "Nu exista o asemenea subsecventa "
+    return subsecventa_maxima
+
+
+def test_get_longest_all_even():
+    assert get_longest_all_even([2, 4, 6]) == [2, 4, 6]
+    assert get_longest_all_even([]) == "Nu exista o asemenea subsecventa "
+
+
 def teste():
     """
     Se executa testele de baza
@@ -141,6 +193,7 @@ def teste():
     """
     test_get_longest_all_palindromes()
     test_get_longest_powers_of_k()
+    test_get_longest_all_even()
     print("De mentionat : Functiile responsabile de verificarea prop. au trecut testele de baza")
 
 
@@ -171,13 +224,19 @@ def citire_date(optiune1):
         print("Cea mai mare subsecventa cu prop. ca toate nr. se pot scrie sub forma x^k este " + str(lista_afisata) + " ")
         print("Programul s-a intors la meniu principal unde puteti citi alte date,sau iesi din program ")
 
+    elif optiune1 == 4:
+        lista_afisata = get_longest_all_even(lista)
+        print("Cea mai mare subsecventa cu prop. ca toate nr. sunt pare este " + str(lista_afisata) + " ")
+        print("Programul s-a intors la meniu principal unde puteti citi alte date,sau iesi din program ")
+
     else:
         while True:
             print("Alegeti ce proprietate sa aiba subsecventa,sau intoarceti-va la meniul principal (puteti citi alte date) ")
             print("Alegeti o optiune: ")
             print("1. Determinare cea mai lungă subsecvență cu toate numerele palindrom")
             print("2. Determinare cea mai lungă subsecvență cu numere ce pot fi scrise sub forma x^k ")
-            print("3. Meniu principal ")
+            print("3. Determianre cea mai lunga subsecventa cu toate numerele pare")
+            print("4. Meniu principal ")
             optiune2 = int(input("Alegeti optiunea "))
 
             if optiune2 == 1:
@@ -190,6 +249,10 @@ def citire_date(optiune1):
                 print("Cea mai mare subsecventa cu prop. " + str(optiune2) + " este " + str(lista_afisata) + " ")
 
             elif optiune2 == 3:
+                lista_afisata = get_longest_all_even(lista)
+                print("Cea mai mare subsecventa cu prop. ca toate nr. sunt pare este " + str(lista_afisata) + " ")
+
+            elif optiune2 == 4:
                 break
 
             else:
@@ -205,7 +268,8 @@ def main():
         print("1. Citeste datele ")
         print("2. Determinare cea mai lungă subsecvență cu numere palindrom ")
         print("3. Determinare cea mai lungă subsecvență cu numere ce pot fi scrise sub forma x^k ")
-        print("4. Iesire ")
+        print("4. Determianre cea mai lunga subsecventa cu toate numerele pare")
+        print("5. Iesire ")
         optiune1 = int(input("Introduceti numarul optiunnii "))
         if optiune1 == 1:
             citire_date(1)
@@ -216,6 +280,9 @@ def main():
             print("Prima data va trebui sa cititi datele,se selecteaza automat optiunea 1 ")
             citire_date(optiune1)
         elif optiune1 == 4:
+            print("Prima data va trebui sa cititi datele,se selecteaza automat optiunea 1 ")
+            citire_date(optiune1)
+        elif optiune1 == 5:
             print("La revedere! ")
             break
         else:
