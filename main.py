@@ -216,7 +216,7 @@ def main():
             print("Prima data va trebui sa cititi datele,se selecteaza automat optiunea 1 ")
             citire_date(optiune1)
         elif optiune1 == 4:
-            print("La revedere ")
+            print("La revedere! ")
             break
         else:
             print("Optiune gresita,alegeti din nou ")
